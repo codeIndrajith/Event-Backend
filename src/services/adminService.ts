@@ -134,9 +134,9 @@ export const approveEventService = async (
       });
     }
 
-    const organizer = await prisma.user.findFirst({
+    const organizer = await prisma.user.findUnique({
       where: {
-        id: eventApproved?.sendrId,
+        id: eventApproved?.senderId,
       },
     });
 
@@ -153,7 +153,7 @@ export const approveEventService = async (
               data?.reason ? ` Reason: ${data.reason}` : ""
             }`;
 
-        await sendPushNotification(organizer.fcmToken, title, body);
+        await sendPushNotification(organizer.notificationToken, title, body);
         console.log("Notification sent to organizer:", organizer.id);
       } catch (notifyError: any) {
         console.error("Failed to send notification:", notifyError);

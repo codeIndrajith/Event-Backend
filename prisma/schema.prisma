@@ -20,6 +20,7 @@ model User {
   FavoriteEvents FavoriteEvents[]
   joinMembers    JoinMembers[]
   venues         Venue[]
+  notificationToken String?
 }
 
 model Event {
