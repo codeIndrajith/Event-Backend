@@ -58,7 +58,7 @@ export const signinUser = async (
   input: SignInRequestBody,
   next: NextFunction
 ): Promise<UserPublicData> => {
-  const { email, password, role, notificationToken } = input;
+  const { email, password, role } = input;
 
   try {
     if (!role) {
@@ -75,12 +75,12 @@ export const signinUser = async (
       throw new ErrorResponse("Invalid email or password", 401);
     }
     // update notification token if provided
-    if (notificationToken) {
-      await prisma.user.update({
-        where: { id: logUser.id },
-        data: { notificationToken },
-      });
-    }
+    // if (notificationToken) {
+    //   await prisma.user.update({
+    //     where: { id: logUser.id },
+    //     data: { notificationToken },
+    //   });
+    // }
     const { password: _, ...publicData } = logUser;
     return {
       ...publicData,
